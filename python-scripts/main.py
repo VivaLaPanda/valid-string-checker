@@ -9,8 +9,9 @@ def main():
         x = int(raw_input("Input k: "))
         digitsAllowed = raw_input("Digits Permitted: ")
         digitsAllowed = map(lambda x: int(x), digitsAllowed.split(" "))
+        digitsAllowed.sort()
         multipleOfX = problem2.shortestPathBFS(digitsAllowed, x)
-        print "Shortest multiple of " + str(x) + " using " + str(digitsAllowed) + " = " + multipleOfX
+        print "Shortest multiple of " + str(x) + " using " + str(digitsAllowed) + " = " + multipleOfX[::-1]
     else:
         print "Please enter just 1 or 2"
         return

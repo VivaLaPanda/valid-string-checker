@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 
 def getNeighbors(state, validDigits, x):
     """
@@ -6,7 +7,7 @@ def getNeighbors(state, validDigits, x):
     :return: list of vertexes
     """
 
-    return map(lambda input: (int(state) * 10 + int(input)) % int(x), validDigits)
+    return map(lambda input: ((int(state) * 10 + int(input)) % int(x), input), validDigits)
 
 def shortestPathBFS(validDigits, x):
     """
@@ -20,9 +21,8 @@ def shortestPathBFS(validDigits, x):
     if x is None:
         return
 
-    state = 0
-    queue = deque([])                               # our queue is a list with insert(0) as enqueue() and pop() as dequeue()
-    queue.extendleft(getNeighbors(state, validDigits, x))
+    state = (-1, "")
+    queue = deque([])
     parent = {}
     visited = {}
     strBuffer = ""
@@ -30,23 +30,35 @@ def shortestPathBFS(validDigits, x):
     if 0 in validDigits:
         return "0"
 
+    # We start be handling the first children specially. This prevents problems
+    # with 0 as a starting state
+    for neighbor in getNeighbors(0, validDigits, x):
+        if neighbor[0] not in visited:
+            queue.appendleft(neighbor)
+            parent[neighbor[0]] = state
+            visited[neighbor[0]] = True
+
+    # BFS
     while len(queue) > 0:
-        state = queue.pop()
+        # Get the first node. We store a tuple of state and the edge that gets
+        # us there
+        statePair = queue.pop()
+        strState = statePair[1]
+        state = statePair[0]
 
         # We are in a terminal state, build the string
         if (state == 0):
-            while state in parent:
-                print state
+            while not statePair[0] == -1:
                 # print state
-                strBuffer += str(state)
-                state = parent[state]
+                strBuffer += str(statePair[1])
+                statePair = parent[statePair[0]]
             return strBuffer
 
         # Enqueu next nodes in the graph
-        if state not in visited:
-            for neighbor in getNeighbors(state, validDigits, x):
+        for neighbor in getNeighbors(state, validDigits, x):
+            if neighbor[0] not in visited:
                 queue.appendleft(neighbor)
-                parent[neighbor] = state
-        visited[state] = True
+                parent[neighbor[0]] = statePair
+                visited[neighbor[0]] = True
 
-    return "FATAL ERROR"
+    return "No string exists"
