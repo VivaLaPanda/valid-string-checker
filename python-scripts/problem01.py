@@ -10,43 +10,43 @@ import sys
 def generateVectors(orientation):
 
     if orientation.lower() == "column":
-        col = np.matrix( """0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
-                            0;
+        col = np.matrix( """1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
+                            1;
                             0""",dtype=object)
         #col.itemset(37,1)
         #print col
@@ -58,7 +58,7 @@ def generateVectors(orientation):
         return row
 
 def p1main():
-    print("started main\n\n\n")
+    
     dfa = np.matrix( """0	1	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	;
                         0	0	1	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	;
                         0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	;
@@ -101,7 +101,6 @@ def p1main():
     magicColumn = generateVectors("column")
     #print("generating row vecotr: ")
     magicRow = generateVectors("row")
-    print("generated things\n\n\n")
     n = input("n= ")
     # code not working past this point.
     # need to make sure dimensions of all the matrices are correct
@@ -110,6 +109,5 @@ def p1main():
     magicSum = np.dot(magicRow, nPower)
     magicSum = np.dot(magicSum, magicColumn)
 
-    print magicSum
-
-    print("The number of strings of length", n, "is", magicSum)
+    words = "The number of strings of length " + str(n) + " is " + str(magicSum[0,0])
+    print(words)
