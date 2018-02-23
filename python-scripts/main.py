@@ -4,7 +4,7 @@ import problem2
 def main():
     text = int(raw_input("Problem 1 or 2 (Answer should be a digit): "))
     if (text == 1) :
-        print "Not yet implemented"
+        problem01.p1main()
     elif (text == 2):
         x = int(raw_input("Input k: "))
         digitsAllowed = raw_input("Digits Permitted: ")
